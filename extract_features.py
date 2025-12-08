@@ -7,9 +7,9 @@ from radiomics import featureextractor
 
 # --- CONFIGURATION ---
 # Define the path to your CSV file
-CSV_FILE = "/Users/abby/Desktop/image_mask_path.csv"
+CSV_FILE = "image_mask_path.csv"
 # Define the name for the output file
-OUTPUT_FILE = "radiomics_results.csv"
+OUTPUT_FILE = "radiomics_results_2.csv"
 
 def load_and_synchronize_image(image_path, mask_path):
     """
@@ -34,7 +34,7 @@ def load_and_synchronize_image(image_path, mask_path):
 
 
 def run_batch_extraction():
-    extractor = featureextractor.RadiomicsFeatureExtractor("settings.yml")
+    extractor = featureextractor.RadiomicsFeatureExtractor("settings2.yml")
 
     all_results = []
     fieldnames = ["ID"]

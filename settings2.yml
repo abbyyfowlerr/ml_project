@@ -1,0 +1,23 @@
+setting:
+  # General settings
+  # resampledPixelSpacing: [1, 1] # Resampling to 1x1x1mm spacing, crucial for 2D images to maintain consistency
+  label: 255 # The label value in the mask representing the region of interest
+
+imageType:
+  Original: {} # Extracts features from the original, unfiltered image
+  # Uncomment and configure other image types if needed, e.g., Wavelet, LoG
+  Wavelet:
+    binWidth: 10
+
+featureClass:
+  # 2. Specify which feature classes to extract, using an empty list [] means extract ALL features in that class
+  firstorder: [] 
+  glcm: [] 
+  glrlm: [] 
+  glszm: [] 
+  gldm: [] 
+  ngtdm: [] 
+
+  # 3. Explicitly list the SHAPE2D features you want to enable/extract
+  # The list below will OVERRIDE the default feature set for shape2D
+  shape2D: []
