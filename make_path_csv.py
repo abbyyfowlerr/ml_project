@@ -16,6 +16,7 @@ def create_img_path_csv(folder, output_csv):
                 if image_path.exists() and mask_path.exists():
                     writer.writerow([image_path, mask_path])
 
-image_folder_path = '/Users/abby/.cache/kagglehub/datasets/aryashah2k/breast-ultrasound-images-dataset/versions/1/Dataset_BUSI_with_GT'
-csv_dest_path = '/Users/abby/Desktop/image_mask_path.csv'
+current_directory = os.getcwd()
+image_folder_path = os.path.join(current_directory, ".data/Dataset_BUSI_with_GT")
+csv_dest_path = os.path.join(current_directory, "image_mask_path.csv")
 create_img_path_csv(image_folder_path, csv_dest_path)

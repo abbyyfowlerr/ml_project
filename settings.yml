@@ -5,6 +5,8 @@ setting:
 
 imageType:
   Original: {} # Extracts features from the original, unfiltered image
+  # Wavelet: {}
+  # LoG: {}
   # Uncomment and configure other image types if needed, e.g., Wavelet, LoG
 
 featureClass:

@@ -5,11 +5,10 @@ import os
 import csv
 from radiomics import featureextractor
 
-# --- CONFIGURATION ---
-# Define the path to your CSV file
+# path to your CSV file
 CSV_FILE = "image_mask_path.csv"
-# Define the name for the output file
-OUTPUT_FILE = "radiomics_results_2.csv"
+# name for the output file
+OUTPUT_FILE = "radiomics_features_with_filters.csv"
 
 def load_and_synchronize_image(image_path, mask_path):
     """
@@ -18,23 +17,23 @@ def load_and_synchronize_image(image_path, mask_path):
     Returns (sitk_image, sitk_mask) or (None, None) on failure.
     """
     try:
-        # --- A. Process Feature Image (The Data) ---
+        # process image
         image_pil = Image.open(image_path)
         np_img = np.array(image_pil.convert("L"))
         image = sitk.GetImageFromArray(np_img)
 
-        # --- B. Process Mask Image (The Labels) ---
+        # process mask
         mask = sitk.ReadImage(mask_path)
         mask = sitk.Cast(mask, sitk.sitkUInt8)
         
         return image, mask
     except FileNotFoundError:
-        print(f"  [ERROR] File not found. Skipping image: {os.path.basename(image_path)}")
+        print(f"File not found. Skipping image: {os.path.basename(image_path)}")
         return None, None
 
 
-def run_batch_extraction():
-    extractor = featureextractor.RadiomicsFeatureExtractor("settings2.yml")
+def run_batch_extraction(param_file):
+    extractor = featureextractor.RadiomicsFeatureExtractor(param_file)
 
     all_results = []
     fieldnames = ["ID"]
@@ -84,10 +83,10 @@ def run_batch_extraction():
                     continue
 
     except FileNotFoundError:
-        print(f"\nFATAL ERROR: Input file not found at {CSV_FILE}.")
+        print(f"\nERROR: Input file not found at {CSV_FILE}.")
         return
 
-    # --- Write Results to CSV ---
+    # Write results to CSV 
     if all_results:
         try:
             with open(OUTPUT_FILE, mode='w', newline='', encoding='utf-8') as outfile:
@@ -96,9 +95,9 @@ def run_batch_extraction():
                 writer.writerows(all_results)
             print(f"\nSUCCESS: Results saved to {OUTPUT_FILE} for {len(all_results)} images.")
         except Exception as e:
-            print(f"FATAL ERROR: Could not write results to CSV. {e}")
+            print(f"ERROR: Could not write results to CSV. {e}")
     else:
         print("\nCOMPLETED: No features were successfully extracted.")
 
 if __name__ == "__main__":
-    run_batch_extraction()
+    run_batch_extraction("settings.yml")
